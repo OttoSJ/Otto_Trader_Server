@@ -32,7 +32,7 @@ router.put('/update-user-inventory/:userId', protect, updateUserInventory)
 router.put('/remove-car-from-inventory/:carId', protect, removeCarFromInventory)
 
 // ALL DELETE ROUTES
-router.delete('/update-user-info/:userId', protect, deleteUser)
 router.delete('/delete-users-inventory/:userId', protect, deleteInventory)
+router.delete('/delete-user/:userId', protect, deleteUser)
 
 module.exports = router
