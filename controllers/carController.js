@@ -11,7 +11,7 @@ const getCars = asyncHandler(async (req, res) => {
 })
 
 const getOneCar = asyncHandler(async (req, res) => {
-  const foundCar = await Car.findById(req.params.id)
+  const foundCar = await Car.findById(req.params.carId)
 
   if (!foundCar) {
     res.status(400)
@@ -86,7 +86,7 @@ const setCar = asyncHandler(async (req, res) => {
 
 const updateCar = asyncHandler(async (req, res) => {
   // I need to improve this route with try catch
-  const car = await Car.findById(req.params.id)
+  const car = await Car.findById(req.params.carId)
   if (!car) {
     res.status(400)
     throw new Error('Car not found')
@@ -102,7 +102,7 @@ const updateCar = asyncHandler(async (req, res) => {
     throw new Error('User not authorized')
   }
 
-  const updatedCar = await Car.findByIdAndUpdate(req.params.id, req.body, {
+  const updatedCar = await Car.findByIdAndUpdate(req.params.carId, req.body, {
     new: true,
   })
 
@@ -111,7 +111,7 @@ const updateCar = asyncHandler(async (req, res) => {
 
 const deleteCar = asyncHandler(async (req, res) => {
   // I need to improve this route with try catch
-  const car = await Car.findById(req.params.id)
+  const car = await Car.findById(req.params.carId)
 
   if (!car) {
     res.status(400)
@@ -130,7 +130,7 @@ const deleteCar = asyncHandler(async (req, res) => {
 
   await car.remove()
 
-  res.status(200).json({ id: req.params.id })
+  res.status(200).json({ id: req.params.carId })
 })
 
 module.exports = {
