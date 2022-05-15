@@ -192,7 +192,7 @@ const removeCarFromInventory = asyncHandler(async (req, res) => {
         $pull: { vehicleinventory: req.body.carId },
       },
       { multi: true }
-    )
+    ).select('-password')
 
     res.status(200).json(user)
   } catch (error) {
