@@ -174,7 +174,7 @@ const updateUserInventory = asyncHandler(async (req, res) => {
     const updateUserInfo = await User.findByIdAndUpdate(
       { _id: req.params.userId },
       { $addToSet: req.body }
-    )
+    ).select('-password')
 
     res.status(200).json(updateUserInfo)
   } catch (error) {
