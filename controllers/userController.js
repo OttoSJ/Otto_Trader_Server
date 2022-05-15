@@ -203,7 +203,7 @@ const removeCarFromInventory = asyncHandler(async (req, res) => {
 
 // ALL DELETE REQUEST //////////////////////////////////
 const deleteUser = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params.userId)
+  const user = await User.findById(req.params.userId).select('-password')
   if (!user) {
     res.status(404)
     throw new Error('User not found')
