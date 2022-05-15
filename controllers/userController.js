@@ -153,7 +153,7 @@ const updateUser = asyncHandler(async (req, res) => {
       req.params.userId,
       req.body,
       { new: true }
-    )
+    ).select('-password')
 
     res.status(200).json(updateUserInfo)
   } catch (error) {
