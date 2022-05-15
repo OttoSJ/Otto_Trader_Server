@@ -142,7 +142,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
 // PUT - UPDATE USER FUNCTION
 const updateUser = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params.userId)
+  const user = await User.findById(req.params.userId).selecta('-password')
   if (!user) {
     res.status(404)
     throw new Error('User not found')
@@ -260,3 +260,5 @@ module.exports = {
   deleteUser,
   deleteInventory,
 }
+
+
