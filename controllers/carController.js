@@ -54,7 +54,7 @@ const setCar = asyncHandler(async (req, res) => {
     const car = await Car.create({
       make,
       model,
-      brand,
+ 
       year,
       type,
       listprice,

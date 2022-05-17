@@ -14,6 +14,8 @@ const protect = asyncHandler(async (req, res, next) => {
 
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
+      console.log({backend_authMiddleWare: decoded}) //check to see what is returned here just for my own curiousity 
+
       req.user = await User.findById(decoded.id).select("-password");
       next();
     } catch (error) {
