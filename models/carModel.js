@@ -93,6 +93,11 @@ const carSchema = new mongoose.Schema(
       type: String,
       default: "false",
     },
+    listVehicle: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
   },
   { timestamps: true }
 );

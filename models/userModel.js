@@ -5,7 +5,11 @@ const userSchema = mongoose.Schema(
     username: {
       type: String,
       required: true,
-      unique: true,
+    },
+    gender: {
+      type: String,
+      required: false,
+      default: '',
     },
     password: {
       type: String,
@@ -52,6 +56,14 @@ const userSchema = mongoose.Schema(
         required: false,
       },
     ],
+    favorites: [
+      { type: mongoose.Schema.Types.ObjectId, ref: 'Car', required: false },
+    ],
+    privleges: {
+      type: String,
+      required: false,
+      default: 'customer',
+    },
   },
   { timestamps: true }
 )
