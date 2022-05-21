@@ -6,7 +6,7 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    gender: {
+    prefix: {
       type: String,
       required: false,
       default: '',
