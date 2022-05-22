@@ -10,10 +10,11 @@ const { findById } = require('../models/userModel')
 // GET - GET SINGLE USER FUNCTION
 const getSingleUser = asyncHandler(async (req, res) => {
   try {
-    const user = await User.findById(req.params.userId)
-      .select('-password')
-      .select('-_id')
-      .select('-vehicleinventory')
+    const user = await User.findById(req.params.userId).select([
+      '-password',
+      '-_id',
+      '-vehicleinventory',
+    ])
 
     if (!user) {
       res.status(401)
@@ -27,15 +28,18 @@ const getSingleUser = asyncHandler(async (req, res) => {
 
 // GET - GET ALL USERS FUNCTION
 const getUser = asyncHandler(async (req, res) => {
-  const allUsers = await User.find().select([
-    '-password',
-    '-address',
-    '-city',
-    '-state',
-    '-zip',
-  ])
-
-  res.status(200).json(allUsers)
+  try {
+    const allUsers = await User.find().select([
+      '-password',
+      '-address',
+      '-city',
+      '-state',
+      '-zip',
+    ])
+    res.status(200).json(allUsers)
+  } catch (error) {
+    res.status(404).json({ message: error })
+  }
 })
 
 // GET - GET USRES INVENTORY
@@ -49,9 +53,9 @@ const getUsersInventory = asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.userId)
       .populate([{ path: 'vehicleinventory', model: 'Car' }])
       .select('-password')
-    res.status(201).json(user)
+    res.status(200).json(user)
   } catch (error) {
-    res.status(500).json({ message: error })
+    res.status(404).json({ message: error })
   }
 })
 
@@ -95,28 +99,32 @@ const registerUser = asyncHandler(async (req, res) => {
   const salt = await bcrypt.genSalt(10)
   const hashedPassword = await bcrypt.hash(password, salt)
 
-  const newUser = await User.create({
-    username,
-    password: hashedPassword,
-    email,
-    firstname,
-    lastname,
-    address,
-    city,
-    state,
-    zip,
-  })
-
-  if (newUser) {
-    res.status(201).json({
-      _id: newUser.id,
-      username: newUser.username,
-      email: newUser.email,
-      token: generateToken(newUser._id),
+  try {
+    const newUser = await User.create({
+      username,
+      password: hashedPassword,
+      email,
+      firstname,
+      lastname,
+      address,
+      city,
+      state,
+      zip,
     })
-  } else {
-    res.status(400)
-    throw new Error('Invalid user data')
+
+    if (newUser) {
+      res.status(201).json({
+        _id: newUser.id,
+        username: newUser.username,
+        email: newUser.email,
+        token: generateToken(newUser._id),
+      })
+    } else {
+      res.status(400)
+      throw new Error('Invalid user data')
+    }
+  } catch (error) {
+    res.status(405).json({ message: error })
   }
 })
 
@@ -125,16 +133,20 @@ const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body
   const newUser = await User.findOne({ email })
 
-  if (newUser && (await bcrypt.compare(password, newUser.password))) {
-    res.json({
-      _id: newUser.id,
-      username: newUser.username,
-      email: newUser.email,
-      token: generateToken(newUser._id),
-    })
-  } else {
-    res.status(400)
-    throw new Error('Invalid credentials')
+  try {
+    if (newUser && (await bcrypt.compare(password, newUser.password))) {
+      res.json({
+        _id: newUser.id,
+        username: newUser.username,
+        email: newUser.email,
+        token: generateToken(newUser._id),
+      })
+    } else {
+      res.status(400)
+      throw new Error('Invalid credentials')
+    }
+  } catch (error) {
+    res.status(401).json({ message: error })
   }
 })
 
@@ -157,7 +169,7 @@ const updateUser = asyncHandler(async (req, res) => {
 
     res.status(200).json(updateUserInfo)
   } catch (error) {
-    res.status(400).json({
+    res.status(401).json({
       message: error,
     })
   }
@@ -178,7 +190,7 @@ const updateUserInventory = asyncHandler(async (req, res) => {
 
     res.status(200).json(updateUserInfo)
   } catch (error) {
-    res.status(400).json({
+    res.status(401).json({
       message: error,
     })
   }
@@ -197,7 +209,7 @@ const removeCarFromInventory = asyncHandler(async (req, res) => {
     res.status(200).json(user)
   } catch (error) {
     console.log(error)
-    res.status(400).json({ message: error })
+    res.status(401).json({ message: error })
   }
 })
 
@@ -212,7 +224,7 @@ const deleteUser = asyncHandler(async (req, res) => {
     user.deleteOne()
     res.status(200).json({ Deleted: user })
   } catch (error) {
-    res.status(400).json({ message: error })
+    res.status(401).json({ message: error })
   }
 })
 
@@ -260,5 +272,3 @@ module.exports = {
   deleteUser,
   deleteInventory,
 }
-
-
