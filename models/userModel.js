@@ -62,7 +62,7 @@ const userSchema = mongoose.Schema(
     privleges: {
       type: String,
       required: false,
-      default: 'customer',
+      default: 'buyer',
     },
   },
   { timestamps: true }
