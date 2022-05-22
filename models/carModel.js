@@ -52,7 +52,7 @@ const carSchema = new mongoose.Schema(
       type: String,
       required: false,
       default:
-        "https://acttochange.org/wp-content/plugins/ninja-forms/assets/img/no-image-available-icon-6.jpg",
+        "https://ouikar.com/pub/media/catalog/product/placeholder/default/image_not_available.png",
     },
     mileage: {
       type: Number,
@@ -93,6 +93,11 @@ const carSchema = new mongoose.Schema(
       type: String,
       default: "false",
     },
+    listVehicle: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
   },
   { timestamps: true }
 );
