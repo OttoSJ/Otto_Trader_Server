@@ -3,8 +3,6 @@ const asyncHandler = require('express-async-handler')
 const Car = require('../models/carModel')
 const User = require('../models/userModel')
 
-// ALL ROUTES ARE PROTECTED AND VERIFIED TO THIS POINT!
-
 const getCars = asyncHandler(async (req, res) => {
   try {
     const cars = await Car.find({ listVehicle: true })
