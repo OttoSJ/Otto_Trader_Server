@@ -87,7 +87,7 @@ const registerUser = asyncHandler(async (req, res) => {
     !zip
   ) {
     res.status(400)
-    throw new Error('Please add all fields')
+    throw new Error('Please add all fields!')
   }
 
   const userExists = await User.findOne({ email })
@@ -131,6 +131,11 @@ const registerUser = asyncHandler(async (req, res) => {
 // POST - LOGIN USER FUNCTION
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body
+  if (!email || !password) {
+    res.status(400)
+    throw new Error('Please enter your email and password')
+  }
+
   const newUser = await User.findOne({ email })
 
   try {
