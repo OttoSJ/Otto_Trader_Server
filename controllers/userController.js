@@ -206,7 +206,10 @@ const removeCarFromInventory = asyncHandler(async (req, res) => {
     const user = await User.findOneAndUpdate(
       { _id: req.body.userId },
       {
-        $pull: { vehicleinventory: req.body.carId },
+        $pull: {
+          vehicleinventory: req.body.carId,
+          favorites: req.body.likedCarId,
+        },
       },
       { multi: true }
     ).select('-password')

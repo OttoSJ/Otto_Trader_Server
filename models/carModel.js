@@ -1,32 +1,32 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 
 const carSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
     },
     make: {
       type: String,
-      required: [true, "Please add make"],
+      required: [true, 'Please add make'],
     },
     model: {
       type: String,
-      required: [true, "Please add model"],
+      required: [true, 'Please add model'],
     },
 
     year: {
       type: Number,
-      required: [true, "Please use numbers only"],
+      required: [true, 'Please use numbers only'],
     },
 
     type: {
       type: String,
-      required: [true, "Please add type, truck, car.."],
+      required: [true, 'Please add type, truck, car..'],
     },
     listprice: {
       type: Number,
-      required: [true, "Please use numbers only"],
+      required: [true, 'Please use numbers only'],
     },
     color: {
       type: String,
@@ -52,56 +52,56 @@ const carSchema = new mongoose.Schema(
       type: String,
       required: false,
       default:
-        "https://ouikar.com/pub/media/catalog/product/placeholder/default/image_not_available.png",
+        'https://ouikar.com/pub/media/catalog/product/placeholder/default/image_not_available.png',
     },
     mileage: {
       type: Number,
-      required: [true, "Please add mileage"],
+      required: [true, 'Please add mileage'],
     },
     // Comfort Features
     ac: {
       type: String,
-      default: "false",
+      default: 'false',
     },
     leatherseats: {
       type: String,
-      default: "false",
+      default: 'false',
     },
     sunroof: {
       type: String,
-      default: "false",
+      default: 'false',
     },
     // Tech Features
     bluetooth: {
       type: String,
-      default: "false",
+      default: 'false',
     },
     cruisecontrol: {
       type: String,
-      default: "false",
+      default: 'false',
     },
     // Entertainment
     satradio: {
       type: String,
-      default: "false",
+      default: 'false',
     },
     auxport: {
       type: String,
-      default: "false",
+      default: 'false',
     },
     amfm: {
       type: String,
-      default: "false",
+      default: 'false',
     },
     listVehicle: {
       type: Boolean,
       required: false,
-      default: false
-    }
+      default: false,
+    },
   },
   { timestamps: true }
-);
+)
 
-const Car = mongoose.model("Car", carSchema);
+const Car = mongoose.model('Car', carSchema)
 
-module.exports = Car;
+module.exports = Car
