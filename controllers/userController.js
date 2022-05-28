@@ -203,7 +203,6 @@ const updateUserInventory = asyncHandler(async (req, res) => {
 
 const removeCarFromInventory = asyncHandler(async (req, res) => {
   try {
-    console.log(req)
     const user = await User.findOneAndUpdate(
       { _id: req.body.userId },
       {
