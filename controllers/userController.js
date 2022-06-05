@@ -51,7 +51,10 @@ const getUsersInventory = asyncHandler(async (req, res) => {
       throw new Error('User not Authorized')
     }
     const user = await User.findById(req.params.userId)
-      .populate([{ path: 'vehicleinventory', model: 'Car' }])
+      .populate([
+        { path: 'vehicleinventory', model: 'Car' },
+        { path: 'favorites', model: 'Car' },
+      ])
       .select('-password')
     res.status(200).json(user)
   } catch (error) {
