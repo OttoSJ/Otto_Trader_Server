@@ -31,7 +31,9 @@ app.use('/api/inventory', require('./routes/carRoutes'))
 
 app.get('/', (req, res) => {
   console.log("I'm awake")
-  res.send('Hello World')
+  res.send(
+    'Hello World, Please refer to API documentation https://documenter.getpostman.com/view/19542352/UyxjFkim'
+  )
 })
 
 app.use(errorHandler)
